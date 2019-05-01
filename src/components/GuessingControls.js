@@ -22,8 +22,15 @@ const Guesses = ({ guesses }) => {
   );
 };
 
+const CenteredForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const GuessingControls = props => {
-  const [guesses, setGuesses] = useState([]);
+
+  const [guesses, setGuesses] = useState(props.guesses || []);
   const [guess, setGuess] = useState('');
 
   const dumbify = input => {
@@ -39,65 +46,67 @@ const GuessingControls = props => {
     const input = dumbify(rawInput);
 
     const name = props.data.name;
-    const accepts = props.data.acceptable || [];
+    const accepts = props.data.accepts || [];
 
     const acceptables = [name, ...accepts].map(a => dumbify(a));
 
     return acceptables.some(acceptable => input == acceptable);
-  };
-
+  }; 
+  
   const onGuess = e => {
     e.preventDefault();
 
     if (!guess) return;
 
+    setGuesses([...guesses, guess]);
+
     if (validate(guess)) {
-      props.onSuccess();
+      props.onSuccess(guesses);
       setGuesses([]);
-    } else {
-      setGuesses([...guesses, guess]);
     }
+
     setGuess('');
   };
 
   const onSkip = e => {
     e.preventDefault();
 
-    props.onSkip();
+    props.onSkip(guesses);
+
+    setGuess('');
+    setGuesses([]);
   };
 
   const onGiveUp = e => {
     e.preventDefault();
 
-    props.onGiveUp();
+    props.onGiveUp(guesses);
+
+    setGuess('');
+    setGuesses([]);
   };
 
-  const CenteredForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  `;
-
   return (
-    <div className="ui card">
-      <div class="content">
+    <div className="ui card centered">
+      <div className="content">
         <CenteredForm className="ui form">
-          <div class="field">
+          <div className="field">
             <input
               type="text"
               placeholder="Enter country name"
+              autoFocus
               value={guess}
               onChange={e => setGuess(e.target.value)}
             />
           </div>
-          <div class="ui buttons">
-            <button class="ui button primary" onClick={onGuess}>
+          <div className="ui buttons">
+            <button className="ui button primary" onClick={onGuess}>
               Guess
             </button>
-            <button class="ui button" onClick={onSkip}>
+            <button className="ui button" onClick={onSkip}>
               Skip
             </button>
-            <button class="ui button negative" onClick={onGiveUp}>
+            <button className="ui button negative" onClick={onGiveUp}>
               Give Up
             </button>
           </div>

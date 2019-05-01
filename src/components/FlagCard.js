@@ -10,7 +10,7 @@ const FlagWrapper = styled.div`
 
 const FlagCard = ({ url }) => (
   <FlagWrapper>
-    <div className="ui card">
+    <div className="ui card centered">
       <div className="image">
         <img src={url} />
       </div>
