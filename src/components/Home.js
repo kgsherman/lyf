@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import Globe from './Globe';
 import * as regions from '../constants/regions';
 import FLAG_DATA from '../constants/FLAG_DATA';
 
-import compressor from '../utils/compression';
+//import compressor from '../utils/compression';
 
 const Title = styled.h1`
   font-family: 'Oswald', san-serif;
@@ -17,7 +18,18 @@ const Instructions = styled.h4`
   font-style: italic;
 `;
 
+const GridContainer = styled.div`
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+`;
+
 const Grid = styled.div`
+  position: absolute;
+  top: 0;
+  right 0;
+  bottom: 0;
+  left: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -73,8 +85,8 @@ const Home = props => {
   const [stackString, setStackString] = useState('');
 
   useEffect(() => {
-    const newStackString = compressor(FLAG_DATA).compress(['US', 'GB'])
-    setStackString(newStackString);
+    //const newStackString = compressor(FLAG_DATA).compress(['US', 'GB'])
+    //setStackString(newStackString);
   }, [region]);
 
   const createRegion = (text, value) => {
@@ -97,19 +109,22 @@ const Home = props => {
       </div>
       <div className="content">
         <Instructions>To begin, select a region</Instructions>
-        <Grid>
-          {createRegion('World', 'all')}
-          {createRegion('North America', 'na')}
-          {createRegion('South America', 'sa')}
-          {createRegion('Europe', 'eu')}
-          <RegionIcon region={hoveredRegion} active={hoveredRegion === region} />
-          {createRegion('Africa', 'afr')}
-          {createRegion('Asia', 'asia')}
-          {createRegion('Middle East', 'me')}
-          {createRegion('Oceania', 'ocea')}
-        </Grid>
+        <GridContainer>
+          <Grid>
+            {createRegion('World', 'all')}
+            {createRegion('North America', 'na')}
+            {createRegion('South America', 'sa')}
+            {createRegion('Europe', 'eu')}
+            {/*<RegionIcon region={hoveredRegion} active={hoveredRegion === region} />*/}
+            <Globe />
+            {createRegion('Africa', 'afr')}
+            {createRegion('Asia', 'asia')}
+            {createRegion('Middle East', 'me')}
+            {createRegion('Oceania', 'ocea')}
+          </Grid>
+        </GridContainer>
         <Link to={`/play?q=${stackString}`}>
-          <button className="fluid ui button primary">
+          <button className="fluid ui button primary basic">
             Go
           </button>
         </Link>
