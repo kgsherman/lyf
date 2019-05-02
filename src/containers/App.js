@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { shuffle } from 'shuffle-seed';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+import Home from '../components/Home';
 import FlagCard from '../components/FlagCard';
 import GuessingControls from '../components/GuessingControls';
 import SuccessBox from '../components/SuccessBox';
@@ -109,7 +111,12 @@ class App extends Component {
   };
 
   render() {
-    return <div>{this.convertStageToComponents()}</div>;
+    return (
+      <Router>
+        <Route exact path="/" component={Home} />
+        <this.convertStageToComponents />
+      </Router>
+    );
   }
 }
 
