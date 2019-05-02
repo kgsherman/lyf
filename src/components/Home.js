@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const Title = styled.h1`
   font-family: 'Oswald', san-serif;
@@ -96,7 +97,11 @@ const Home = props => {
           {createRegion('Middle East', 'me')}
           {createRegion('Oceania', 'ocea')}
         </Grid>
-        <button className="fluid ui button primary">Go</button>
+        <Link to={'/play'}>
+          <button className="fluid ui button primary">
+            Go
+          </button>
+        </Link>
         <div class="ui horizontal divider">Or</div>
         <Instructions>Paste in a code from a previous game</Instructions>
         <div class="ui action input fluid">
