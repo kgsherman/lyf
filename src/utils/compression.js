@@ -31,19 +31,26 @@ const compressor = (stack, groupSize = 20) => {
   const group = n => `${compressNum(n % groupSize)}`;
 
   const groupCompress = toSave => {
-    const counts = _.countBy(toSave, x => x % groupSize);
+    const chunks = _.chunk(stack, groupSize)
     const groups = {};
-    stack
-      //.map((e, i) => compressNum(Math.floor(i / groupSize)))
-      .forEach((country_code, i) => {
-        if (counts[(i % groupSize).toString()]) {
-          const adding = counts[(i % groupSize).toString()] < groupSize / 2;
-          const save = adding ? toSave.includes(country_code) : !toSave.includes(country_code);
-          const thisGroup = group(i);
-          groups[thisGroup] = groups.hasOwnProperty(thisGroup) ? groups[thisGroup] : `${+adding}`;
-          if (save) groups[thisGroup] = `${groups[thisGroup]}${country_code}`;
-        }
-      });
+    chunks
+      .forEach((chunk, i) => {
+        const flagsInChunk = chunk
+          .map(flag => flag.code)
+          .filter(countryCode => toSave.includes(countryCode))
+
+        if (flagsInChunk.length) {
+          const adding = flagsInChunk.length < groupSize / 2;
+          chunk
+            .map(flag => flag.code)
+            .forEach(countryCode => {
+              const save = adding ? toSave.includes(countryCode) : !toSave.includes(countryCode);
+              const thisGroup = group(i);
+              groups[thisGroup] = groups.hasOwnProperty(thisGroup) ? groups[thisGroup] : `${+adding}`;
+              if (save) groups[thisGroup] = `${groups[thisGroup]}${countryCode}`;
+            });
+          }
+        });
     return [GROUP_COMPRESSION,
       _.map(groups, (v, k) => `${k}${v}`).join()
     ].join();
@@ -54,8 +61,8 @@ const compressor = (stack, groupSize = 20) => {
     return [WORLD_COMPRESSION,
       +adding,
       stack
-        //.map((e, i) => compressNum(i))
-        .filter((country_code, i) => (adding ? toSave.includes(country_code) : !toSave.includes(country_code)))
+        .map(flag => flag.code)
+        .filter(countryCode => (adding ? toSave.includes(countryCode) : !toSave.includes(countryCode)))
         .join('')
     ].join('');
   };
@@ -85,8 +92,9 @@ const compressor = (stack, groupSize = 20) => {
           return encoded;
         } else {
           encoded = new Set(encoded);
-          return _.range(g, stack.length, groupSize)
-            .filter(n => !encoded.has(n));
+          return _.chunks(stack, groupSize)[g]
+            .map(flag => flag.code)
+            .filter(countryCode => !encoded.has(countryCode));
         }
       })
     )
@@ -102,7 +110,9 @@ const compressor = (stack, groupSize = 20) => {
       return encoded;
     } else {
       encoded = new Set(encoded);
-      return stack.filter(flag => !encoded.has(flag.code));
+      return stack
+        .map(flag => flag.code)
+        .filter(countryCode => !encoded.has(countryCode));
     }
   };
 
