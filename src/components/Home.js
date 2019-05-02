@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
+import * as regions from '../constants/regions';
+import FLAG_DATA from '../constants/FLAG_DATA';
+
+import compressor from '../utils/compression';
 
 const Title = styled.h1`
   font-family: 'Oswald', san-serif;
@@ -66,6 +71,14 @@ const Home = props => {
   const [region, setRegion] = useState('all');
   const [hoveredRegion, setHoveredRegion] = useState('all');
 
+  useEffect(() => {
+    Object.keys(regions).forEach(key => {
+      let image = new Image();
+      image.src = `regions/${regions[key]}_icon.png}`;
+    })
+
+  })
+
   const createRegion = (text, value) => {
     return (
       <Region
@@ -97,7 +110,7 @@ const Home = props => {
           {createRegion('Middle East', 'me')}
           {createRegion('Oceania', 'ocea')}
         </Grid>
-        <Link to={'/play'}>
+        <Link to={`/play?q=${compressor(FLAG_DATA).compress(['US', 'UK'])}`}>
           <button className="fluid ui button primary">
             Go
           </button>

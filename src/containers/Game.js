@@ -70,8 +70,8 @@ class Game extends Component {
     });
   };
 
-  onNext = (success) => {
-    const moveToStack = success? 'rightStack' : 'wrongStack';
+  onNext = success => {
+    const moveToStack = success ? 'rightStack' : 'wrongStack';
     this.setState({
       [moveToStack]: [...this.state[moveToStack], this.state.doingStack[0]],
       doingStack: this.state.doingStack.slice(1),
@@ -112,7 +112,9 @@ class Game extends Component {
 
   render() {
     return (
+      <>
         <this.convertStageToComponents />
+      </>
     );
   }
 }
