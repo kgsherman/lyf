@@ -6,7 +6,7 @@ import Globe from './Globe';
 import * as regions from '../constants/regions';
 import FLAG_DATA from '../constants/FLAG_DATA';
 
-//import compressor from '../utils/compression';
+import compressor from '../utils/compression';
 
 const Title = styled.h1`
   font-family: 'Oswald', san-serif;
@@ -85,8 +85,12 @@ const Home = props => {
   const [stackString, setStackString] = useState('');
 
   useEffect(() => {
-    //const newStackString = compressor(FLAG_DATA).compress(['US', 'GB'])
-    //setStackString(newStackString);
+    const stack = FLAG_DATA
+      .filter(flag => region == regions.ALL || flag.regions.includes(region))
+      .map(flag => flag.code);
+
+    const newStackString = compressor(FLAG_DATA).compress(stack);
+    setStackString(newStackString);
   }, [region]);
 
   const createRegion = (text, value) => {
@@ -111,22 +115,20 @@ const Home = props => {
         <Instructions>To begin, select a region</Instructions>
         <GridContainer>
           <Grid>
-            {createRegion('World', 'all')}
-            {createRegion('North America', 'na')}
-            {createRegion('South America', 'sa')}
-            {createRegion('Europe', 'eu')}
+            {createRegion('World', regions.ALL)}
+            {createRegion('North America', regions.NORTH_AMERICA)}
+            {createRegion('South America', regions.SOUTH_AMERICA)}
+            {createRegion('Europe', regions.EUROPE)}
             {/*<RegionIcon region={hoveredRegion} active={hoveredRegion === region} />*/}
             <Globe region={hoveredRegion} />
-            {createRegion('Africa', 'afr')}
-            {createRegion('Asia', 'asia')}
-            {createRegion('Middle East', 'me')}
-            {createRegion('Oceania', 'ocea')}
+            {createRegion('Africa', regions.AFRICA)}
+            {createRegion('Asia', regions.ASIA)}
+            {createRegion('Middle East', regions.MIDDLE_EAST)}
+            {createRegion('Oceania', regions.OCEANIA)}
           </Grid>
         </GridContainer>
-        <Link to={`/play?q=${stackString}`}>
-          <button className="fluid ui button primary basic">
-            Go
-          </button>
+        <Link to={`/play?stack=${stackString}`}>
+          <button className="fluid ui button primary basic">Go</button>
         </Link>
         <div class="ui horizontal divider">Or</div>
         <Instructions>Paste in a code from a previous game</Instructions>

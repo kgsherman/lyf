@@ -82,7 +82,7 @@ const compressor = (stack, groupSize = 20) => {
       .split(',')
       .slice(1)
       .map(e => {
-        //const g = decompressNum(e.substring(0, 2));
+        const g = decompressNum(e.substring(0, 2));
         const inclusion = e[2];
         let encoded = e
           .substring(3)

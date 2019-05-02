@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { shuffle } from 'shuffle-seed';
 import styled from 'styled-components';
+import queryString from 'query-string';
 
 import FlagCard from '../components/FlagCard';
 import GuessingControls from '../components/GuessingControls';
@@ -9,6 +10,7 @@ import FailureBox from '../components/FailureBox';
 
 import FLAG_DATA from '../constants/FLAG_DATA';
 import { GUESSING, SUCCESS, GIVE_UP, SUMMARY } from '../constants/stages';
+import compressor from '../utils/compression';
 
 class Game extends Component {
   state = {
@@ -19,24 +21,11 @@ class Game extends Component {
   };
 
   initializeStack(options = {}) {
-    let stack = FLAG_DATA;
-
-    // filter regions
-    if (options.regions) {
-      stack = stack.filter(flag => flag.regions.some(region => options.regions.includes(region)));
-    }
-
-    // shuffle using random seed
-    const seed = Math.random()
-      .toString(36)
-      .substring(7);
-    stack = shuffle(stack, seed);
-
-    // initialize game things
-    stack = stack.map(item => ({
-      ...item,
-      guesses: []
-    }));
+    const queries = queryString.parse(this.props.location.search);
+    const countryCodes = compressor(FLAG_DATA).decompress(queries.stack);
+    const stack = countryCodes.map(code => {
+      return FLAG_DATA.find(flag => flag.code === code);
+    });
 
     return stack;
   }

@@ -1,46 +1,48 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import * as THREE from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import TWEEN from '@tweenjs/tween.js';
 
-class Globe extends Component {
+import * as regions from '../constants/regions';
+
+class Globe extends PureComponent {
   regionCoordinates = {
-    na: {
+    [regions.NORTH_AMERICA]: {
       x: 0.8,
       y: 0.23,
       z: 0
     },
-    eu: {
+    [regions.EUROPE]: {
       x: 0.82,
       y: -1.9,
       z: 0
     },
-    afr: {
+    [regions.AFRICA]: {
       x: 0.18,
       y: -1.85,
       z: 0
     },
-    all: {
+    [regions.ALL]: {
       x: 1.1,
       y: -1.2,
       z: 0
     },
-    sa: {
+    [regions.SOUTH_AMERICA]: {
       x: -0.4,
       y: -0.4,
       z: 0
     },
-    asia: {
+    [regions.ASIA]: {
       x: 0.65,
       y: 3.2,
       z: 0
     },
-    me: {
+    [regions.MIDDLE_EAST]: {
       x: 0.5,
       y: -2.34,
       z: 0
     },
-    ocea: {
+    [regions.OCEANIA]: {
       x: -0.25,
       y: -3.82,
       z: 0
