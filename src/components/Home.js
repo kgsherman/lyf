@@ -116,7 +116,7 @@ const Home = props => {
             {createRegion('South America', 'sa')}
             {createRegion('Europe', 'eu')}
             {/*<RegionIcon region={hoveredRegion} active={hoveredRegion === region} />*/}
-            <Globe />
+            <Globe region={hoveredRegion} />
             {createRegion('Africa', 'afr')}
             {createRegion('Asia', 'asia')}
             {createRegion('Middle East', 'me')}
