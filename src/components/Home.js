@@ -70,14 +70,12 @@ const Region = props => {
 const Home = props => {
   const [region, setRegion] = useState('all');
   const [hoveredRegion, setHoveredRegion] = useState('all');
+  const [stackString, setStackString] = useState('');
 
   useEffect(() => {
-    Object.keys(regions).forEach(key => {
-      let image = new Image();
-      image.src = `regions/${regions[key]}_icon.png}`;
-    })
-
-  })
+    const newStackString = compressor(FLAG_DATA).compress(['US', 'GB'])
+    setStackString(newStackString);
+  }, [region]);
 
   const createRegion = (text, value) => {
     return (
@@ -110,7 +108,7 @@ const Home = props => {
           {createRegion('Middle East', 'me')}
           {createRegion('Oceania', 'ocea')}
         </Grid>
-        <Link to={`/play?q=${compressor(FLAG_DATA).compress(['US', 'UK'])}`}>
+        <Link to={`/play?q=${stackString}`}>
           <button className="fluid ui button primary">
             Go
           </button>
