@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "582e15a2a4f3ec0d87f6ee15fe7774a7",
+    "revision": "1d53e3ab4b6f3b5b493806bf33c4b70c",
     "url": "/lyf/index.html"
   },
   {
