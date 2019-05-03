@@ -130,9 +130,9 @@ const Home = props => {
         <Link to={`/play?stack=${stackString}`}>
           <button className="fluid ui button primary basic">Go</button>
         </Link>
-        <div class="ui horizontal divider">Or</div>
+        <div className="ui horizontal divider">Or</div>
         <Instructions>Paste in a code from a previous game</Instructions>
-        <div class="ui action input fluid">
+        <div className="ui action input fluid">
           <input type="text" placeholder="Paste code..." />
           <button className="ui button">Go</button>
         </div>

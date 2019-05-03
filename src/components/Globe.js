@@ -1,11 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import * as THREE from 'three';
-import OrbitControls from 'three-orbitcontrols';
 import TWEEN from '@tweenjs/tween.js';
 
 import * as regions from '../constants/regions';
 
-class Globe extends PureComponent {
+class Globe extends Component {
   regionCoordinates = {
     [regions.NORTH_AMERICA]: {
       x: 0.8,
@@ -63,6 +62,7 @@ class Globe extends PureComponent {
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setClearColor('#fff');
+    this.renderer.setPixelRatio( window.devicePixelRatio );
     this.renderer.setSize(width, height);
     this.mount.appendChild(this.renderer.domElement);
 
@@ -73,23 +73,20 @@ class Globe extends PureComponent {
     const mapTexture = mapLoader.load(
       'http://1.bp.blogspot.com/-596lbFumbyA/Ukb1cHw21_I/AAAAAAAAK-U/KArMZAjbvyU/s1600/water_4k.png'
     );
+    mapTexture.anisotropy = this.renderer.capabilities.getMaxAnisotropy();
     material.map = mapTexture;
     material.map.minFilter = THREE.LinearFilter;
     this.cube = new THREE.Mesh(geometry, material);
-    //this.cube.rotation.set() = this.regionCoordinates[this.props.region] || { x: 0, y: 0, z: 0 };
+    
     this.cube.setRotationFromEuler(new THREE.Euler(
-        this.regionCoordinates.all.x,
-        this.regionCoordinates.all.y,
-        this.regionCoordinates.all.z,
+        this.regionCoordinates[regions.ALL].x,
+        this.regionCoordinates[regions.ALL].y,
+        this.regionCoordinates[regions.ALL].z,
     ))
     this.scene.add(this.cube);
 
     // add light
     this.scene.add(new THREE.AmbientLight(0xffffff));
-
-    // add orbit controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.enableDamping = true;
 
     // start!
     this.start();
@@ -101,7 +98,8 @@ class Globe extends PureComponent {
       this.cube.rotation.y += e.movementX * 0.01;
 
       console.log(this.cube.rotation);
-    });*/
+    });
+    */
   }
 
   componentWillUnmount() {
@@ -133,9 +131,7 @@ class Globe extends PureComponent {
   animate = () => {
     this.renderScene();
     TWEEN.update();
-    this.controls.update();
     this.frameId = window.requestAnimationFrame(this.animate);
-    //console.log(this.camera.position);
   };
 
   renderScene = () => {

@@ -22,12 +22,45 @@ class Game extends Component {
 
   initializeStack(options = {}) {
     const queries = queryString.parse(this.props.location.search);
+
     const countryCodes = compressor(FLAG_DATA).decompress(queries.stack);
     const stack = countryCodes.map(code => {
-      return FLAG_DATA.find(flag => flag.code === code);
+      const flagData = FLAG_DATA.find(flag => flag.code === code);
+      return {
+        ...flagData,
+        guesses: []
+      };
     });
 
-    return stack;
+    const seed = queries.seed || Math.random().toString(36).substring(7);
+    console.log(seed);
+    const shuffledStack = shuffle(stack, seed);
+
+    return shuffledStack;
+    //old code:
+    /*
+    let stfack = FLAG_DATA;
+
+
+
+    // filter regions
+    if (options.regions) {
+      stack = stack.filter(flag => flag.regions.some(region => options.regions.includes(region)));
+    }
+
+    // shuffle using random seed
+    const seed = Math.random()
+      .toString(36)
+      .substring(7);
+    stack = shuffle(stack, seed);
+
+    // initialize game things
+    stack = stack.map(item => ({
+      ...item,
+      guesses: []
+    }));
+
+    return stack;*/
   }
 
   onSuccess = guesses => {
