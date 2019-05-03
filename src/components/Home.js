@@ -112,7 +112,7 @@ const Home = props => {
         <Title>LEARN YOUR FLAGS</Title>
       </div>
       <div className="content">
-        <Instructions>To begin, select a region</Instructions>
+        <Instructions>To begin, select a region...</Instructions>
         <GridContainer>
           <Grid>
             {createRegion('World', regions.ALL)}
@@ -131,9 +131,9 @@ const Home = props => {
           <button className="fluid ui button primary basic">Go</button>
         </Link>
         <div className="ui horizontal divider">Or</div>
-        <Instructions>Paste in a code from a previous game</Instructions>
+        <Instructions>Paste in a code from a previous game...</Instructions>
         <div className="ui action input fluid">
-          <input type="text" placeholder="Paste code..." />
+          <input type="text" placeholder="Paste code here" />
           <button className="ui button">Go</button>
         </div>
       </div>
