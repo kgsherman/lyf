@@ -15,8 +15,6 @@ import generateSeed from '../utils/generateSeed';
 
 const Game = props => {
   const initializeStack = (stackCode = '00', seed = generateSeed()) => {
-    console.log('initializing stack');
-
     const countryCodes = compressor(FLAG_DATA).decompress(stackCode);
     const stack = countryCodes.map(code => {
       const flagData = FLAG_DATA.find(flag => flag.code === code);
@@ -30,13 +28,12 @@ const Game = props => {
     return shuffledStack;
   };
 
-  const initialStack = initializeStack();
-  const [doingStack, setDoingStack] = useState(initialStack);
+  const [doingStack, setDoingStack] = useState([]);
   const [rightStack, setRightStack] = useState([]);
   const [wrongStack, setWrongStack] = useState([]);
   const [stage, setStage] = useState(STAGE.GUESSING);
 
-  /*const refreshStack = () => {
+  useEffect(() => {
     const queries = queryString.parse(props.location.search);
     const newStack = initializeStack(queries.stack, queries.seed);
 
@@ -44,19 +41,14 @@ const Game = props => {
     setRightStack([]);
     setWrongStack([]);
     setStage(STAGE.GUESSING);
-  };*/
+  }, [props.location]);
 
   useEffect(() => {
-    console.log('use effect')
-
-    const queries = queryString.parse(props.location.search);
-    const newStack = initializeStack(queries.stack, queries.seed);
-
-    setDoingStack(newStack);
-    setRightStack([]);
-    setWrongStack([]);
-    setStage(STAGE.GUESSING);
-  }, [props.location.search]);
+    if (doingStack.length > 1) {
+      const flagImg = new Image();
+      flagImg.src = doingStack[1].url;
+    }
+  }, [doingStack])
 
   const onSuccess = guesses => {
     setStage(STAGE.SUCCESS);
@@ -107,12 +99,12 @@ const Game = props => {
     }
   };
 
-  return (
-    <>
-      <FlagCard url={doingStack[0].url} />
-      <GameControl stage={stage} flagData={doingStack[0]} />
-    </>
-  );
+  return doingStack.length ? (
+      <>
+        <FlagCard url={doingStack[0].url} />
+        <GameControl stage={stage} flagData={doingStack[0]} />
+      </>
+    ) : null;
 };
 /*
 class GameOld extends Component {

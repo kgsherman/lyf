@@ -53,6 +53,7 @@ const FLAG_DATA = [
     code: 'AU',
     name: 'Australia',
     url: 'flags/Flag_of_Australia_%28converted%29.svg',
+    accepts: ['Straya', 'Oz'],
     regions: [OCEANIA]
   },
   {
