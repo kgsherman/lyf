@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/lyf/static/js/main.c6dd4930.chunk.js",
-    "main.js.map": "/lyf/static/js/main.c6dd4930.chunk.js.map",
+    "main.js": "/lyf/static/js/main.913f965e.chunk.js",
+    "main.js.map": "/lyf/static/js/main.913f965e.chunk.js.map",
     "runtime~main.js": "/lyf/static/js/runtime~main.6be6d303.js",
     "runtime~main.js.map": "/lyf/static/js/runtime~main.6be6d303.js.map",
-    "static/js/2.4989805d.chunk.js": "/lyf/static/js/2.4989805d.chunk.js",
-    "static/js/2.4989805d.chunk.js.map": "/lyf/static/js/2.4989805d.chunk.js.map",
+    "static/js/2.a37d1b9d.chunk.js": "/lyf/static/js/2.a37d1b9d.chunk.js",
+    "static/js/2.a37d1b9d.chunk.js.map": "/lyf/static/js/2.a37d1b9d.chunk.js.map",
     "index.html": "/lyf/index.html",
-    "precache-manifest.03a041f61951132e13e4e5dc81faa929.js": "/lyf/precache-manifest.03a041f61951132e13e4e5dc81faa929.js",
+    "precache-manifest.935746acddfde32d2e2326a787b1e821.js": "/lyf/precache-manifest.935746acddfde32d2e2326a787b1e821.js",
     "service-worker.js": "/lyf/service-worker.js"
   }
 }
