@@ -141,7 +141,7 @@ class Globe extends Component {
   render() {
     return (
       <div
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '87px', height: '87px' }}
         ref={mount => {
           this.mount = mount;
         }}

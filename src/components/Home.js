@@ -42,8 +42,8 @@ const GridItem = styled.div`
   justify-self: center;
   align-self: center;
   text-align: center;
-  width: 100%;
-  height: 100%;
+  width: 87px;
+  height: 87px;
 `;
 
 const RegionIcon = ({ region, active }) => {
