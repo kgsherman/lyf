@@ -5,7 +5,7 @@ const FlagWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 354px;
+  /*min-height: 354px;*/
 `;
 
 const FlagCard = ({ url }) => (
