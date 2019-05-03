@@ -19,7 +19,7 @@ const SuccessBox = props => {
       <div className="content">
         <span className="header">Correct!</span>
         <div className="description">
-            You got {props.data.name} correct on your {getOrdinal(props.data.guesses.length + 1)} try.
+            You got {props.data.name} correct on your {getOrdinal(props.data.guesses.length)} try.
         </div>
 
       </div>
