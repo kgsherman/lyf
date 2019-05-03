@@ -12,11 +12,11 @@ const compressor = stack => {
       bitArray[index] = 1;
     });
 
-    return Buffer.from(pako.deflate(bitArray.join(''), { to: 'string' })).toString('base64');
+    return encodeURIComponent(Buffer.from(pako.deflate(bitArray.join(''), { to: 'string' })).toString('base64'));
   }
 
   const decompress = compressedCode => {
-    const bitArray = pako.inflate(Buffer.from(compressedCode, 'base64').toString(), { to: 'string' });
+    const bitArray = pako.inflate(Buffer.from(decodeURIComponent(compressedCode), 'base64').toString(), { to: 'string' });
 
     const countryIndexesToInclude = bitArray
       .split('')
