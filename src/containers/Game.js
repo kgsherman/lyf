@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { shuffle } from 'shuffle-seed';
 import styled from 'styled-components';
 import queryString from 'query-string';
@@ -9,10 +9,113 @@ import SuccessBox from '../components/SuccessBox';
 import FailureBox from '../components/FailureBox';
 
 import FLAG_DATA from '../constants/FLAG_DATA';
-import { GUESSING, SUCCESS, GIVE_UP, SUMMARY } from '../constants/stages';
+import * as STAGE from '../constants/stages';
 import compressor from '../utils/compression';
+import generateSeed from '../utils/generateSeed';
 
-class Game extends Component {
+const Game = props => {
+  const initializeStack = (stackCode = '00', seed = generateSeed()) => {
+    console.log('initializing stack');
+
+    const countryCodes = compressor(FLAG_DATA).decompress(stackCode);
+    const stack = countryCodes.map(code => {
+      const flagData = FLAG_DATA.find(flag => flag.code === code);
+      return {
+        ...flagData,
+        guesses: []
+      };
+    });
+
+    const shuffledStack = shuffle(stack, seed);
+    return shuffledStack;
+  };
+
+  const initialStack = initializeStack();
+  const [doingStack, setDoingStack] = useState(initialStack);
+  const [rightStack, setRightStack] = useState([]);
+  const [wrongStack, setWrongStack] = useState([]);
+  const [stage, setStage] = useState(STAGE.GUESSING);
+
+  /*const refreshStack = () => {
+    const queries = queryString.parse(props.location.search);
+    const newStack = initializeStack(queries.stack, queries.seed);
+
+    setDoingStack(newStack);
+    setRightStack([]);
+    setWrongStack([]);
+    setStage(STAGE.GUESSING);
+  };*/
+
+  useEffect(() => {
+    console.log('use effect')
+
+    const queries = queryString.parse(props.location.search);
+    const newStack = initializeStack(queries.stack, queries.seed);
+
+    setDoingStack(newStack);
+    setRightStack([]);
+    setWrongStack([]);
+    setStage(STAGE.GUESSING);
+  }, [props.location.search]);
+
+  const onSuccess = guesses => {
+    setStage(STAGE.SUCCESS);
+    setDoingStack([
+      {
+        ...doingStack[0],
+        guesses
+      },
+      ...doingStack.slice(1)
+    ]);
+  };
+
+  const onFail = guesses => {
+    setStage(STAGE.GIVE_UP);
+    setDoingStack([
+      {
+        ...doingStack[0],
+        guesses
+      },
+      ...doingStack.slice(1)
+    ]);
+  };
+
+  const onSkip = guesses => {
+    setDoingStack([
+      ...doingStack.slice(1),
+      {
+        ...doingStack[0],
+        guesses
+      }
+    ]);
+  };
+
+  const onNext = success => {
+    success ? setRightStack([...rightStack, doingStack[0]]) : setWrongStack([...wrongStack, doingStack[0]]);
+    setDoingStack(doingStack.slice(1));
+    setStage(STAGE.GUESSING);
+  };
+
+  const GameControl = ({ stage, flagData }) => {
+    switch (stage) {
+      case STAGE.GUESSING:
+        return <GuessingControls data={flagData} onSuccess={onSuccess} onSkip={onSkip} onGiveUp={onFail} />;
+      case STAGE.SUCCESS:
+        return <SuccessBox data={flagData} onNext={() => onNext(true)} />;
+      case STAGE.GIVE_UP:
+        return <FailureBox data={flagData} onNext={() => onNext(false)} />;
+    }
+  };
+
+  return (
+    <>
+      <FlagCard url={doingStack[0].url} />
+      <GameControl stage={stage} flagData={doingStack[0]} />
+    </>
+  );
+};
+/*
+class GameOld extends Component {
   state = {
     doingStack: this.initializeStack(),
     rightStack: [],
@@ -23,7 +126,9 @@ class Game extends Component {
   initializeStack(options = {}) {
     const queries = queryString.parse(this.props.location.search);
 
-    const countryCodes = compressor(FLAG_DATA).decompress(queries.stack);
+    const stackCode = this.props.match.params.stack || '00';
+
+    const countryCodes = compressor(FLAG_DATA).decompress(stackCode);
     const stack = countryCodes.map(code => {
       const flagData = FLAG_DATA.find(flag => flag.code === code);
       return {
@@ -32,35 +137,14 @@ class Game extends Component {
       };
     });
 
-    const seed = queries.seed || Math.random().toString(36).substring(7);
-    console.log(seed);
+    const seed =
+      queries.seed ||
+      Math.random()
+        .toString(36)
+        .substring(7);
     const shuffledStack = shuffle(stack, seed);
 
     return shuffledStack;
-    //old code:
-    /*
-    let stfack = FLAG_DATA;
-
-
-
-    // filter regions
-    if (options.regions) {
-      stack = stack.filter(flag => flag.regions.some(region => options.regions.includes(region)));
-    }
-
-    // shuffle using random seed
-    const seed = Math.random()
-      .toString(36)
-      .substring(7);
-    stack = shuffle(stack, seed);
-
-    // initialize game things
-    stack = stack.map(item => ({
-      ...item,
-      guesses: []
-    }));
-
-    return stack;*/
   }
 
   onSuccess = guesses => {
@@ -140,5 +224,5 @@ class Game extends Component {
     );
   }
 }
-
+*/
 export default Game;

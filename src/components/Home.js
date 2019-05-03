@@ -134,7 +134,7 @@ const Home = props => {
         <Instructions>Paste in a code from a previous game...</Instructions>
         <div className="ui action input fluid">
           <input type="text" placeholder="Paste code here" />
-          <button className="ui button">Go</button>
+          <button className="ui button basic">Go</button>
         </div>
       </div>
     </div>

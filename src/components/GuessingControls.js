@@ -5,8 +5,8 @@ import levenshtein from '../utils/levenshtein';
 
 const Guess = ({ guess }) => (
   <div className="item">
-    <i class="close icon middle aligned" />
-    <div class="content">{guess}</div>
+    <i className="close icon middle aligned" />
+    <div className="content">{guess}</div>
   </div>
 );
 
@@ -14,8 +14,8 @@ const Guesses = ({ guesses }) => {
   if (guesses.length == 0) return null;
 
   return (
-    <div class="extra content">
-      <div class="ui divided list">
+    <div className="extra content">
+      <div className="ui divided list">
         {guesses.map(guess => (
           <Guess guess={guess} />
         ))}
