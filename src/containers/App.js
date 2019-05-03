@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import Home from '../components/Home';
 import Game from './Game';
@@ -21,6 +22,13 @@ const RegionMenuItem = ({ region, children }) => {
     </Link>
   );
 };
+
+const GithubText = styled.span`
+  display: inline-block;
+  @media (max-width: 700px) {
+    display: none;
+  }
+`;
 
 class App extends Component {
   render() {
@@ -50,7 +58,7 @@ class App extends Component {
           </div>
           <a className="item align right" href="https://github.com/kgsherman/lyf" target="_blank" rel="noopener noreferrer">
             <i className="github icon" />
-            View on Github
+            <GithubText>View on Github</GithubText>
           </a>
         </div>
         <Route exact path="/" component={Home} />
