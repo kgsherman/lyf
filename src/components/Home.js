@@ -83,6 +83,7 @@ const Home = props => {
   const [region, setRegion] = useState('all');
   const [hoveredRegion, setHoveredRegion] = useState('all');
   const [stackString, setStackString] = useState('');
+  const [manualString, setManualString] = useState('');
 
   useEffect(() => {
     const stack = FLAG_DATA
@@ -92,6 +93,10 @@ const Home = props => {
     const newStackString = compressor(FLAG_DATA).compress(stack);
     setStackString(newStackString);
   }, [region]);
+
+  const onManualGo = () => {
+    props.history.push(`/play?stack=${manualString}`)
+  }
 
   const createRegion = (text, value) => {
     return (
@@ -133,8 +138,8 @@ const Home = props => {
         <div className="ui horizontal divider">Or</div>
         <Instructions>Paste in a code from a previous game...</Instructions>
         <div className="ui action input fluid">
-          <input type="text" placeholder="Paste code here" />
-          <button className="ui button basic">Go</button>
+          <input type="text" placeholder="Paste code here" value={manualString} onChange={e => setManualString(e.target.value)} />
+          <button className="ui button basic" onClick={onManualGo}>Go</button>
         </div>
       </div>
     </div>
