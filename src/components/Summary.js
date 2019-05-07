@@ -20,6 +20,37 @@ const Stat = styled.span`
 `;
 
 const Summary = props => {
+  const RetryBox = (
+    <div className="ui card centered">
+      <div className="content">
+        <Instructions>Time to learn!</Instructions>
+        <p>Play again with only the flags you missed:</p>
+        <Link to={`/play?stack=${props.stackString}`} className="ui button fluid basic">
+          Go!
+        </Link>
+        <div className="ui horizontal divider">OR</div>
+        <p>Save this code to try again later:</p>
+        <div className="ui disabled fluid input">
+          <input type="text" value={props.stackString} readOnly />
+        </div>
+      </div>
+    </div>
+  );
+
+  const GoldStarBox = (
+    <div className="ui card centered">
+      <div className="content">
+        <h1 className="ui icon header">
+          <i className="star icon" style={{color: 'gold'}} />
+          <div className="content">
+            Amazing!
+            <div className="sub header">You got every flag right! Well done!</div>
+          </div>
+        </h1>
+      </div>
+    </div>
+  );
+
   const time = React.useContext(TimeContext);
   return (
     <>
@@ -83,20 +114,7 @@ const Summary = props => {
           </div>
         </div>
       </div>
-      <div className="ui card centered">
-        <div className="content">
-          <Instructions>Time to learn!</Instructions>
-          <p>Play again with only the flags you missed:</p>
-          <Link to={`/play?stack=${props.stackString}`} className="ui button fluid basic">
-            Go!
-          </Link>
-          <div className="ui horizontal divider">OR</div>
-          <p>Save this code to try again later:</p>
-          <div className="ui disabled fluid input">
-            <input type="text" value={props.stackString} readOnly />
-          </div>
-        </div>
-      </div>
+      {props.stackString ? RetryBox : GoldStarBox }
     </>
   );
 };

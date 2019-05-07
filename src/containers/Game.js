@@ -94,6 +94,9 @@ const Game = props => {
   };
 
   const getRetryStack = () => {
+    if (wrongStack.length === 0)
+      return null;
+      
     const stack = wrongStack.map(flag => flag.code);
     const stackString = compressor(FLAG_DATA).compress(stack);
 
