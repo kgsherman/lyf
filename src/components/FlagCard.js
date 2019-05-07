@@ -12,7 +12,7 @@ const FlagCard = ({ url }) => (
   <FlagWrapper>
     <div className="ui card centered">
       <div className="image">
-        <img src={url} />
+        <img src={url} alt="What flag is this?" />
       </div>
     </div>
   </FlagWrapper>

@@ -285,7 +285,7 @@ const FLAG_DATA = [
     code: 'CG',
     name: 'Republic of the Congo',
     url: 'flags/Flag_of_the_Republic_of_the_Congo.svg',
-    accepts: ['Congo'],
+    accepts: ['Congo', 'ROC'],
     regions: [AFRICA]
   },
   {
@@ -319,9 +319,9 @@ const FLAG_DATA = [
   {
     index: 44,
     code: 'CZ',
-    name: 'Czech Republic',
+    name: 'Czechia',
     url: 'flags/Flag_of_the_Czech_Republic.svg',
-    accepts: ['Czechia'],
+    accepts: ['Czech Republic'],
     regions: [EUROPE]
   },
   {
@@ -732,7 +732,7 @@ const FLAG_DATA = [
     code: 'MK',
     name: 'North Macedonia',
     url: 'flags/Flag_of_Macedonia.svg',
-    accepts: ['Macedonia'],
+    accepts: ['Macedonia', 'FYROM'],
     regions: [EUROPE]
   },
   {
@@ -1314,7 +1314,7 @@ const FLAG_DATA = [
     code: 'GB',
     name: 'United Kingdom',
     url: 'flags/Flag_of_the_United_Kingdom.svg',
-    accepts: ['UK'],
+    accepts: ['UK', 'Britain', 'Great Britain'],
     regions: [EUROPE]
   },
   {

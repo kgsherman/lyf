@@ -11,7 +11,7 @@ const Guess = ({ guess }) => (
 );
 
 const Guesses = ({ guesses }) => {
-  if (guesses.length == 0) return null;
+  if (guesses.length === 0) return null;
 
   return (
     <div className="extra content">
@@ -29,13 +29,6 @@ const CenteredForm = styled.form`
   flex-direction: column;
   justify-content: center;
 `;
-
-const SpellingTipWrapper = styled.div`
-  position: absolute;
-  bottom: 100%;
-`;
-
-const SpellingTip = ({ children }) => <SpellingTipWrapper />;
 
 const GuessingControls = props => {
   const [guesses, setGuesses] = useState(props.guesses || []);
@@ -65,7 +58,7 @@ const GuessingControls = props => {
 
     const acceptables = [name, ...accepts].map(a => dumbify(a));
 
-    return acceptables.some(acceptable => input == acceptable);
+    return acceptables.some(acceptable => input === acceptable);
   };
 
   const checkSpelling = rawInput => {

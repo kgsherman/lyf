@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Home from '../components/Home';
 import Game from './Game';
+import Summary from '../components/Summary';
 
 import FLAG_DATA from '../constants/FLAG_DATA';
 import * as regions from '../constants/regions';
@@ -63,6 +64,7 @@ class App extends Component {
         </div>
         <Route exact path="/" component={Home} />
         <Route exact path="/play" component={Game} />
+        <Route exact path="/summary" component={Summary} />
       </Router>
     );
   }
