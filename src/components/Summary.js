@@ -100,7 +100,7 @@ const Summary = props => {
             <div className="item">
               <i className="large crosshairs middle aligned icon" />
               <div className="content">
-                <div className="header">{props.avg}</div>
+                <div className="header">{props.avg.toFixed(2)}</div>
                 <div className="description">Average attempts per correct answer</div>
               </div>
             </div>
