@@ -5,7 +5,6 @@
   "homepage": "https://kgsherman.github.io/lyf",
   "dependencies": {
     "@tweenjs/tween.js": "^17.3.0",
-    "fomantic-ui": "^2.7.4",
     "lodash": "^4.17.11",
     "pako": "^1.0.10",
     "query-string": "^6.5.0",
